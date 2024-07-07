@@ -50,9 +50,3 @@ Here is an example of how the extension can be used:
 3. Click the `Code Explainer: Explain` command or Open the primary sidebar by clicking the `code-explainer` icon and paste the code in the input box.
 4. The extension will generate an explanation for the code and show it in a side panel.
 
-### CONTRIBUTING
-
-Feel free to contribute to the Project. Even if it's just raising an issue or fixing a typo, it would matter a lot 💘, you can see the Contributing guidelines [here](https://github.com/Sadeedpv/codeExplainer).
-If you would love to donate, See [here](https://www.patreon.com/SadeedPV)
-
-I hope you found this extension useful!
