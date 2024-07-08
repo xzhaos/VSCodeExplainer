@@ -3,18 +3,39 @@ const vscode = require("vscode");
 // Markdown Format
 const md = require("markdown-it")();
 
-// Import chatgpt
-const { Configuration, OpenAIApi } = require("openai");
-
 // Obtain the api key from the user
 const config = vscode.workspace.getConfiguration("code-explainer");
 const apiKey = config.get("apiKey");
+const modelId = config.get("model");
 
-const configuration = new Configuration({
-  apiKey: apiKey,
-});
 
-const openai = new OpenAIApi(configuration);
+const {
+  GoogleGenerativeAI,
+  HarmBlockThreshold,
+  HarmCategory,
+} = require("@google/generative-ai")
+
+const genAI = new GoogleGenerativeAI(apiKey);
+const gemini = genAI.getGenerativeModel(
+  {
+    model: modelId,
+    safetySettings: [
+      {
+        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+        threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+      },
+    ],
+  },
+  { apiVersion: "v1beta" },
+);
+  
+
+const getExplainationFromGemeni = async (code) => {
+  const prompt = "Please explain the code enclosed in <CODE> tag. <CODE>" + code + "</CODE>";
+  const result = await gemini.generateContent(prompt);
+  const response = result.response;
+  return response.text();
+}
 
 const style = `
     <style>
@@ -45,7 +66,7 @@ const script = `
 const getCodeExplanation = async (code) => {
   if (!apiKey) {
     vscode.window.showErrorMessage(
-      "Please set your OpenAI API key in the extension settings."
+      "Please set your LLM API key in the extension settings."
     );
     return;
   }
@@ -83,24 +104,10 @@ const getCodeExplanation = async (code) => {
   });
   // Ask Chatgpt
   try {
-    const explanation = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a helpful assistant that explains code or writes code or gives suggestion.",
-        },
-        {
-          role: "user",
-          content: `${code}`,
-        },
-      ],
-      temperature: 0.8,
-    });
+    const explanation = await getExplainationFromGemeni(code);
     vscode.window.showInformationMessage("Explanation Ready!");
     panel.dispose();
-    return explanation.data.choices[0].message.content;
+    return explanation;
   } catch (err) {
     console.error(err);
     panel.dispose();
@@ -139,30 +146,16 @@ const showCodeExplanation = (code) => {
 
 const getHoverExplanation = async (code) => {
   if (!apiKey) {
-    return "Please set your OpenAI API key if you want to use Code-Explainer extension.";
+    return "Please set your LLM API key if you want to use Code-Explainer extension.";
   }
   if (!code) {
     return "Please Hover over the code you want to explain.";
   }
   // Ask Chatgpt
   try {
-    const explanation = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a helpful assistant that explains code or writes code or gives suggestion.",
-        },
-        {
-          role: "user",
-          content: `${code}`,
-        },
-      ],
-      temperature: 0.8,
-    });
+    const explanation = await await getExplainationFromGemeni(code);
     console.log(explanation);
-    return explanation.data.choices[0].message.content;
+    return explanation;
   } catch (err) {
     console.error(err);
     return;
