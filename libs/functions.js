@@ -102,7 +102,7 @@ const getCodeExplanation = async (code) => {
   panel.onDidDispose(() => {
     panel.dispose();
   });
-  // Ask Chatgpt
+  // Ask Gemini
   try {
     const explanation = await getExplainationFromGemeni(code);
     vscode.window.showInformationMessage("Explanation Ready!");
@@ -119,7 +119,7 @@ const showCodeExplanation = (code) => {
   let panel = vscode.window.createWebviewPanel(
     "codeExplanation", // Id
     "Code Explanation", // Title
-    vscode.ViewColumn.One, // Column
+    vscode.ViewColumn.Beside, // Column
     {} // Options
   );
   code = md.render(code);
