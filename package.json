@@ -2,7 +2,7 @@
   "name": "gemini-code-explainer",
   "displayName": "Gemini Code Explainer",
   "description": "Explains every bit of code inside your editor using Gemini",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/xzhaos/codeExplainer"
@@ -20,6 +20,7 @@
   "activationEvents": [
     "onCommand:code-explainer.hello-world",
     "onCommand:code-explainer.explain",
+    "onCommand:code-explainer.gen-code",
     "onLanguage",
     "onView:code-explainer"
   ],
@@ -54,6 +55,11 @@
         "command": "code-explainer.explain",
         "category": "CodeExplainer",
         "title": "Explain"
+      },
+      {
+        "command": "code-explainer.gen-code",
+        "category": "CodeExplainer",
+        "title": "Generate Code"
       }
     ],
     "configuration": [

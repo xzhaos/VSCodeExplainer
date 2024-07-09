@@ -37,6 +37,21 @@ const getExplainationFromGemeni = async (code) => {
   return response.text();
 }
 
+const genCode = async (instruction, fileName) => {
+  if (!apiKey) {
+    vscode.window.showErrorMessage(
+      "Please set your LLM API key in the extension settings."
+    );
+    return;
+  }
+  const prompt = "Please generate the code based on instructions enclosed in <INSTRUCTION> tag." + 
+        "please detect the programming language based on file name: " + fileName + 
+        "\nThe output should be raw code without markdown. <INSTRUCTION>" + instruction + "</INSTRUCTION>";
+  const result = await gemini.generateContent(prompt);
+  const response = result.response;
+  return response.text();
+}
+
 const style = `
     <style>
     #outer-div {
@@ -165,4 +180,5 @@ module.exports = {
   getCodeExplanation,
   showCodeExplanation,
   getHoverExplanation,
+  genCode
 };

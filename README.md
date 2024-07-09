@@ -30,6 +30,9 @@ Once the extension is installed, you can use the command **Code Explainer: Expla
 All you have to do is select the piece of code you want the explanation for and hit `Ctrl + shift + p` and search for explain.
 Alternatively, you can also open `Code-explainer` by clicking the icon and paste the code in the input box.
 
+you can use the command **Code Explainer: Generate Code** to generate any piece of code. 
+All you have to do is select the comment which includes the instruction you want the code to do and hit `Ctrl + shift + p` and search for Generate Code.
+
 ### Configuration
 
 But before that, you have to configure your Gemini API key. Go to your VSCode settings(Ctrl + ,) and search for code-explainer and set your `API KEY` which you can easily obtain from here - https://console.cloud.google.com/apis/credentials

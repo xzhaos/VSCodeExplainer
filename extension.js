@@ -6,6 +6,7 @@ const {
   getCodeExplanation,
   showCodeExplanation,
   getHoverExplanation,
+  genCode,
 } = require("./libs/functions");
 
 // This method is called when your extension is activated
@@ -128,7 +129,41 @@ function activate(context) {
     );
 
     context.subscriptions.push(hoverDisposable);
+    
   }
+
+  // create code generation
+  let codeGenDisposable = vscode.commands.registerCommand('code-explainer.gen-code', () => {
+    let editor = vscode.window.activeTextEditor;
+    if (editor) {
+        let selection = editor.selection;
+        const document = editor.document;
+        let fileName = editor.document.fileName;
+        let position = selection.end; // Get the end position of the selection
+        const instruction = document.getText(selection);
+        genCode(instruction, fileName).then((output) => {
+          // console.log("gencode output:", output);
+          // Pass output to another function if needed
+          editor.edit(editBuilder => {
+            editBuilder.insert(position, '\n' + output );
+        }).then(success => {
+            if (success) {
+                vscode.window.showInformationMessage('Code inserted.');
+            } else {
+                vscode.window.showErrorMessage('Failed to generate code.');
+            }
+        });
+      }).catch(err => {
+          console.error("Error in async function:", err);
+      });
+        // Insert text after the selection
+        
+    } else {
+        vscode.window.showInformationMessage('No active editor found.');
+    }
+  });
+
+  context.subscriptions.push(codeGenDisposable);
 
   // Input box on the sidebar
   let sideBar = vscode.window.registerWebviewViewProvider("code-explainer", {
