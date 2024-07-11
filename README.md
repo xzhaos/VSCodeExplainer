@@ -13,6 +13,8 @@
 
 Adapted from (https://github.com/Sadeedpv/codeExplainer/blob/main/assets/code-explainer-logo.png?raw=true). Many thanks to @Sadeedpv. 
 
+Code repository (https://github.com/xzhaos/VSCodeExplainer)
+
 ## Installation
 
 To install the extension, open VS Code and go to the Extensions tab. Search for **Code Explainer** and click Install. Alternatively, You can install it from [here](https://marketplace.visualstudio.com/items?itemName=xzhaos.gemini-code-explainer)
@@ -21,8 +23,7 @@ To install the extension, open VS Code and go to the Extensions tab. Search for 
 
 - You have trouble understanding an open-source project.
 - Or Maybe you just copied the code from Stack Overflow or some other site, and you don't understand what you've just written.
-- You can also write comments to let AI generate your code
-- You can also tell AI to generate the code you want using the input box.
+- You can also tell AI to generate the code you want by selecting comment (instruction) in the code.
 
 ## HOW TO USE!?
 
@@ -33,9 +34,13 @@ Alternatively, you can also open `Code-explainer` by clicking the icon and paste
 you can use the command **Code Explainer: Generate Code** to generate any piece of code. 
 All you have to do is select the comment which includes the instruction you want the code to do and hit `Ctrl + shift + p` and search for Generate Code.
 
+### Explain Code
+
 ![Explain code example](https://github.com/xzhaos/VSCodeExplainer/blob/main/assets/codeexplain.gif?raw=true)
 
-![Explain code example](https://github.com/xzhaos/VSCodeExplainer/blob/main/assets/gencode.gif?raw=true)
+### Generate Code
+
+![Generate code example](https://github.com/xzhaos/VSCodeExplainer/blob/main/assets/gencode.gif?raw=true)
 
 
 

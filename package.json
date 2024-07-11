@@ -2,10 +2,10 @@
   "name": "gemini-code-explainer",
   "displayName": "Gemini Code Explainer",
   "description": "Explains every bit of code inside your editor using Gemini",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xzhaos/codeExplainer"
+    "url": "https://github.com/xzhaos/VSCodeExplainer"
   },
   "license": "MIT",
   "publisher": "xzhaos",
