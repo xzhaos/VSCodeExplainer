@@ -144,8 +144,10 @@ function activate(context) {
         genCode(instruction, fileName).then((output) => {
           // console.log("gencode output:", output);
           // Pass output to another function if needed
+          // process a string that for any substring started with ``` and ended with new line with a new line
+          const replacedString = output.replace(/```[^]*?\n/g, "\n").replace("```", "");
           editor.edit(editBuilder => {
-            editBuilder.insert(position, '\n' + output );
+            editBuilder.insert(position, '\n' + replacedString );
         }).then(success => {
             if (success) {
                 vscode.window.showInformationMessage('Code inserted.');

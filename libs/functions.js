@@ -46,7 +46,7 @@ const genCode = async (instruction, fileName) => {
   }
   const prompt = "Please generate the code based on instructions enclosed in <INSTRUCTION> tag." + 
         "please detect the programming language based on file name: " + fileName + 
-        "\nThe output should be raw code without markdown. <INSTRUCTION>" + instruction + "</INSTRUCTION>";
+        "\nThe output should be raw code without markdown format or ```. <INSTRUCTION>" + instruction + "</INSTRUCTION>";
   const result = await gemini.generateContent(prompt);
   const response = result.response;
   return response.text();
