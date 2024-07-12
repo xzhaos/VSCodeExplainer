@@ -139,24 +139,16 @@ function activate(context) {
         let selection = editor.selection;
         const document = editor.document;
         let fileName = editor.document.fileName;
-        let position = selection.end; // Get the end position of the selection
+        // let position = selection.end; // Get the end position of the selection
         const instruction = document.getText(selection);
-        genCode(instruction, fileName).then((output) => {
-          // console.log("gencode output:", output);
-          // Pass output to another function if needed
-          // process a string that for any substring started with ``` and ended with new line with a new line
-          const replacedString = output.replace(/```[^]*?\n/g, "\n").replace("```", "");
-          editor.edit(editBuilder => {
-            editBuilder.insert(position, '\n' + replacedString );
-        }).then(success => {
+        genCode(instruction, fileName, editor).then(success => {
             if (success) {
                 vscode.window.showInformationMessage('Code inserted.');
             } else {
                 vscode.window.showErrorMessage('Failed to generate code.');
             }
-        });
-      }).catch(err => {
-          console.error("Error in async function:", err);
+        }).catch(err => {
+          vscode.window.showErrorMessage("Error in generating code:" + err);
       });
         // Insert text after the selection
         

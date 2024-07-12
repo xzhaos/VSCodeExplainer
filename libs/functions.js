@@ -7,7 +7,7 @@ const md = require("markdown-it")();
 const config = vscode.workspace.getConfiguration("code-explainer");
 const apiKey = config.get("apiKey");
 const modelId = config.get("model");
-
+const isStreaming = config.get("streaming");
 
 const {
   GoogleGenerativeAI,
@@ -28,7 +28,7 @@ const gemini = genAI.getGenerativeModel(
   },
   { apiVersion: "v1beta" },
 );
-  
+
 
 const getExplainationFromGemeni = async (code) => {
   const prompt = "Please explain the code enclosed in <CODE> tag. <CODE>" + code + "</CODE>";
@@ -37,20 +37,52 @@ const getExplainationFromGemeni = async (code) => {
   return response.text();
 }
 
-const genCode = async (instruction, fileName) => {
+const genCode = async (instruction, fileName, editor) => {
   if (!apiKey) {
     vscode.window.showErrorMessage(
       "Please set your LLM API key in the extension settings."
     );
     return;
   }
+  // console.log(instruction);
   const prompt = "Please generate the code based on instructions enclosed in <INSTRUCTION> tag." + 
         "please detect the programming language based on file name: " + fileName + 
-        "\nThe output should be raw code without markdown format or ```. <INSTRUCTION>" + instruction + "</INSTRUCTION>";
-  const result = await gemini.generateContent(prompt);
-  const response = result.response;
-  return response.text();
+        "\nThe output should only have the generated code in plain text format. DO NOT INCLUDE BACKTICKS IN THE RESPONSE. <INSTRUCTION>" + instruction + "</INSTRUCTION>";
+  
+  let selection = editor.selection;
+  let newPosition = selection.end;
+  
+  if (isStreaming) {
+    const result = await gemini.generateContentStream([prompt]);
+    await editor.edit(editBuilder => {
+      editBuilder.insert(newPosition, "\n" );
+    });
+// print text as it comes in
+    for await (const chunk of result.stream) {
+      const chunkText = chunk.text();
+      console.log(chunkText);
+      let selection = editor.selection;
+      let newPosition = selection.end;
+      await editor.edit(editBuilder => {
+        editBuilder.insert(newPosition, chunkText );
+      });
+      
+    //
+    }
+
+  } else {
+    const result = await gemini.generateContent(prompt);
+    const response = result.response;
+    const output = response.text();
+    editor.edit(editBuilder => {
+      editBuilder.insert(newPosition, '\n' + output );
+    });
+
+  }
+  return;
 }
+
+
 
 const style = `
     <style>

@@ -2,7 +2,7 @@
   "name": "gemini-code-explainer",
   "displayName": "Gemini Code Explainer",
   "description": "Explains every bit of code inside your editor using Gemini",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/xzhaos/VSCodeExplainer"
@@ -76,6 +76,11 @@
             "type": "string",
             "default": "gemini-1.5-flash-latest",
             "description": "LLM model"
+          },
+          "code-explainer.streaming": {
+            "type": "boolean",
+            "default": false,
+            "description": "generate code in streaming mode"
           },
           "code-explainer.hover": {
             "type": "boolean",
