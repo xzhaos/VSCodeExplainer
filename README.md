@@ -27,12 +27,11 @@ To install the extension, open VS Code and go to the Extensions tab. Search for 
 
 ## HOW TO USE!?
 
-Once the extension is installed, you can use the command **Code Explainer: Explain** to get an explanation for any piece of code.
-All you have to do is select the piece of code you want the explanation for and hit `Ctrl + shift + p` and search for explain.
+Once the extension is installed, you can select the code you want to get explaination and then righ click and select `Explain` in the menu. 
+
 Alternatively, you can also open `Code-explainer` by clicking the icon and paste the code in the input box.
 
-you can use the command **Code Explainer: Generate Code** to generate any piece of code. 
-All you have to do is select the comment which includes the instruction you want the code to do and hit `Ctrl + shift + p` and search for Generate Code.
+For code generation, you can select the comment which includes the instruction you want the code to do and then right click to get context menu and select `Generate Code`.
 
 ### Explain Code
 

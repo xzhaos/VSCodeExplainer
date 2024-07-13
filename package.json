@@ -2,7 +2,7 @@
   "name": "gemini-code-explainer",
   "displayName": "Gemini Code Explainer",
   "description": "Explains every bit of code inside your editor using Gemini",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "repository": {
     "type": "git",
     "url": "https://github.com/xzhaos/VSCodeExplainer"
@@ -18,7 +18,6 @@
   "main": "./extension.js",
   "icon": "assets/code-explainer-logo-ext.png",
   "activationEvents": [
-    "onCommand:code-explainer.hello-world",
     "onCommand:code-explainer.explain",
     "onCommand:code-explainer.gen-code",
     "onLanguage",
@@ -47,11 +46,6 @@
     },
     "commands": [
       {
-        "command": "code-explainer.hello-world",
-        "category": "CodeExplainer",
-        "title": "Hello World!"
-      },
-      {
         "command": "code-explainer.explain",
         "category": "CodeExplainer",
         "title": "Explain"
@@ -60,6 +54,34 @@
         "command": "code-explainer.gen-code",
         "category": "CodeExplainer",
         "title": "Generate Code"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "code-explainer.gen-code",
+          "when": "editorTextFocus && editorHasSelection",
+          "group": "code"
+        },
+        {
+          "command": "code-explainer.explain",
+          "when": "editorTextFocus && editorHasSelection",
+          "group": "code"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "code-explainer.gen-code", 
+        "key": "ctrl+shift+g", 
+        "mac": "cmd+shift+g", 
+        "when": "editorTextFocus && editorHasSelection"
+      },
+      {
+        "command": "code-explainer.explain", 
+        "key": "ctrl+shift+e", 
+        "mac": "cmd+shift+e", 
+        "when": "editorTextFocus && editorHasSelection"
       }
     ],
     "configuration": [

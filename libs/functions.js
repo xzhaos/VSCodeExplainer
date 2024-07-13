@@ -79,7 +79,7 @@ const genCode = async (instruction, fileName, editor) => {
     });
 
   }
-  return;
+  return true;
 }
 
 

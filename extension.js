@@ -145,7 +145,7 @@ function activate(context) {
             if (success) {
                 vscode.window.showInformationMessage('Code inserted.');
             } else {
-                vscode.window.showErrorMessage('Failed to generate code.');
+              vscode.window.showInformationMessage('Failed to generate code.');
             }
         }).catch(err => {
           vscode.window.showErrorMessage("Error in generating code:" + err);
