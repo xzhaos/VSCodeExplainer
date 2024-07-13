@@ -60,7 +60,7 @@ const genCode = async (instruction, fileName, editor) => {
 // print text as it comes in
     for await (const chunk of result.stream) {
       const chunkText = chunk.text();
-      console.log(chunkText);
+      // console.log(chunkText);
       let selection = editor.selection;
       let newPosition = selection.end;
       await editor.edit(editBuilder => {
